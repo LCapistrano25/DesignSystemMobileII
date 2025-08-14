@@ -3,11 +3,15 @@ import 'package:mobile_07_08/Components/ActionButton/action_button_view_model.da
 import 'package:mobile_07_08/Shared/Colors.dart';
 import 'package:mobile_07_08/Shared/Styles.dart';
 
+abstract class ActionButtonDelegate {
+  void onClick(ActionButtonViewModel viewModel);
+}
 class ActionButton extends StatelessWidget {
   
   final ActionButtonViewModel viewModel;
   Color backgroundColor;
   int size = 16;
+  ActionButtonDelegate? delegate;
   
   ActionButton._(
     {
@@ -18,7 +22,7 @@ class ActionButton extends StatelessWidget {
     });
 
 
-   static Widget instantiate({
+   static ActionButton instantiate({
     required ActionButtonViewModel viewModel, 
     backgroundColor = primaryBaseColor
     }) {
@@ -62,7 +66,7 @@ class ActionButton extends StatelessWidget {
     double horizontalPadding = 32.0;
 
     return ElevatedButton(
-      onPressed: viewModel.onPressed,
+      onPressed: () { delegate?.onClick(viewModel); },
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor,
         textStyle: regular,
@@ -74,7 +78,6 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     setStyle(viewModel.style);
     setSize(viewModel.size);
     return createElevatedButton();
