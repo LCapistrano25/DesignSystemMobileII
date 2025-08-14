@@ -6,22 +6,26 @@ import 'package:mobile_07_08/Shared/Styles.dart';
 class ActionButton extends StatelessWidget {
   
   final ActionButtonViewModel viewModel;
+  Color backgroundColor;
+  int size = 16;
   
-  const ActionButton._({super.key, required this.viewModel});
+  ActionButton._(
+    {
+      super.key, 
+      required this.viewModel, 
+      this.backgroundColor = primaryBaseColor,
+      this.size = 16,
+    });
 
-  static Widget instantiate({required ActionButtonViewModel viewModel}) {
+
+   static Widget instantiate({
+    required ActionButtonViewModel viewModel, 
+    backgroundColor = primaryBaseColor
+    }) {
     return ActionButton._(viewModel: viewModel);
   }
 
-  @override
-  Widget build(BuildContext context) {
-
-    double verticalPadding = 12.0;
-    double horizontalPadding = 32.0;
-    Color backgroundColor = primaryBaseColor;
-    double size = 16.0;
-    
-    
+  void setStyle(ActionButtonStyle style) {
     switch(viewModel.style) {
       case ActionButtonStyle.primary:
         backgroundColor = primaryBaseColor;
@@ -35,20 +39,27 @@ class ActionButton extends StatelessWidget {
         backgroundColor = tertiaryBaseColor;
         break;
     }
+  }
 
+  void setSize(ActionButtonSize size) {
     switch(viewModel.size) {
       case ActionButtonSize.small:
-        size = 16.0;
+        this.size = 16;
         break;
 
       case ActionButtonSize.medium:
-        size = 24.0;
+        this.size = 24;
         break;
 
       case ActionButtonSize.large:
-        size = 32.0;
+        this.size = 32;
         break;
     }
+  }
+
+  Widget createElevatedButton() {
+    double verticalPadding = 12.0;
+    double horizontalPadding = 32.0;
 
     return ElevatedButton(
       onPressed: viewModel.onPressed,
@@ -59,5 +70,14 @@ class ActionButton extends StatelessWidget {
       ),
       child: Text(viewModel.text),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    setStyle(viewModel.style);
+    setSize(viewModel.size);
+    return createElevatedButton();
+    
   }
 }
