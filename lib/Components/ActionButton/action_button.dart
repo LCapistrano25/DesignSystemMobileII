@@ -21,7 +21,6 @@ class ActionButton extends StatelessWidget {
       this.size = 16,
     });
 
-
    static ActionButton instantiate({
     required ActionButtonViewModel viewModel, 
     backgroundColor = primaryBaseColor

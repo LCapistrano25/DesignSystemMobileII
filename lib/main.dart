@@ -75,6 +75,6 @@ class _MyHomePageState extends State<MyHomePage> implements  ActionButtonDelegat
   
   @override
   void onClick(ActionButtonViewModel viewModel) {
-    print("Clicado");
+    _incrementCounter();
   }
 }
